@@ -13,6 +13,17 @@ import (
 type MAWSBucket struct {
 	//
 	BucketName string
+	Handle     *s3.S3
+}
+
+// ---------------------------------------------------------------------------
+//
+func MAWSMakeBucket(maws *MAWS, name string) *MAWSBucket {
+	//
+	return &MAWSBucket{
+		BucketName: name,
+		Handle:     s3.New(maws.AWS),
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -58,6 +69,53 @@ func (b *MAWSBucket) Uploadfile(maws *MAWS, key string, localname string) error 
 		Bucket: aws.String(b.BucketName),
 		Key:    aws.String(key),
 		Body:   file,
+	})
+
+	//
+	return err
+}
+
+// ---------------------------------------------------------------------------
+// List content of bucket
+func (b *MAWSBucket) ListObjects(maws *MAWS) (*s3.ListObjectsV2Output, error) {
+	//
+	resp, err := b.Handle.ListObjectsV2(&s3.ListObjectsV2Input{Bucket: aws.String(b.BucketName)})
+
+	//
+	return resp, err
+}
+
+// ---------------------------------------------------------------------------
+// List content of bucket
+func (b *MAWSBucket) ListObjectKeys(maws *MAWS) ([]string, error) {
+	//
+	resp, err := b.ListObjects(maws)
+
+	//
+	if err != nil {
+		//
+		return []string{}, err
+	}
+
+	var _out []string
+
+	//
+	for _, i := range resp.Contents {
+		//
+		_out = append(_out, *i.Key)
+	}
+
+	//
+	return _out, nil
+}
+
+// ---------------------------------------------------------------------------
+// List content of bucket
+func (b *MAWSBucket) DeleteKey(maws *MAWS, key string) error {
+	//
+	_, err := b.Handle.DeleteObject(&s3.DeleteObjectInput{
+		Bucket: aws.String(b.BucketName),
+		Key:    aws.String(key),
 	})
 
 	//
