@@ -26,3 +26,20 @@ func MAWSInit() *MAWS {
 			Region: aws.String(defRegion)})),
 	}
 }
+
+// ---------------------------------------------------------------------------
+// AWS_DEFAULT_REGION - vyzaduje se pritomnost v env
+func MAWSInitRegion(regionCode string) *MAWS {
+	//
+	return &MAWS{
+		AWS: session.Must(session.NewSession(&aws.Config{
+			Region: aws.String(regionCode)})),
+	}
+}
+
+// ---------------------------------------------------------------------------
+//
+func MAWSSetRegion(regionCode string) {
+	//
+	os.Setenv("AWS_DEFAULT_REGION", regionCode)
+}
