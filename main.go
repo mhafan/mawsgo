@@ -8,20 +8,14 @@ import (
 )
 
 // ---------------------------------------------------------------------------
-//
-func SayHello() string {
-	return "Hello from MAWS-for-go"
-}
-
-// ---------------------------------------------------------------------------
-//
+// Zakladni ridici struktura pro MAWS
 type MAWS struct {
-	//
+	// handle na spojeni
 	AWS *session.Session
 }
 
 // ---------------------------------------------------------------------------
-// AWS_DEFAULT_REGION -
+// AWS_DEFAULT_REGION - vyzaduje se pritomnost v env
 func MAWSInit() *MAWS {
 	//
 	defRegion := os.Getenv("AWS_DEFAULT_REGION")

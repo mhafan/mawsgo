@@ -4,40 +4,55 @@ import (
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
 // ---------------------------------------------------------------------------
 // Datovy model pristupu do jednoho bucket
+// ---------------------------------------------------------------------------
+// API:
+// - MAWSMakeBucket - vytvoreni struktury pro pristup na bucket
+// - Download(key, local) - stazeni souboru
+// - Uploadfile
+// - ListObjectKeys
+// - DeleteKey
 type MAWSBucket struct {
 	//
 	BucketName string
 	Handle     *s3.S3
+
+	// handle na spojeni AWS (kopiruje se)
+	AWS *session.Session
 }
 
 // ---------------------------------------------------------------------------
-//
-func MAWSMakeBucket(maws *MAWS, name string) *MAWSBucket {
+// vytvoreni Handle na S3:bucket
+func (maws *MAWS) MAWSMakeBucket(name string) *MAWSBucket {
 	//
 	return &MAWSBucket{
 		BucketName: name,
 		Handle:     s3.New(maws.AWS),
+		AWS:        maws.AWS,
 	}
 }
 
 // ---------------------------------------------------------------------------
 // Download souboru S3
-func (b *MAWSBucket) Download(maws *MAWS, key string, saveto string) error {
-	//
-	downloader := s3manager.NewDownloader(maws.AWS)
+func (b *MAWSBucket) Download(key string, saveto string) error {
+	// TODO: musi nutne vznikat pro kazdou operaci?
+	// je v tom nejaka vyznamna casova rezie?
+	downloader := s3manager.NewDownloader(b.AWS)
 
-	//
+	// obsluha lokalniho souboru
 	f, err := os.Create(saveto)
 	if err != nil {
 		//
 		return err
 	}
+
+	// ...
 	defer f.Close()
 
 	// ...
@@ -52,16 +67,17 @@ func (b *MAWSBucket) Download(maws *MAWS, key string, saveto string) error {
 
 // ---------------------------------------------------------------------------
 // Upload of S3 file
-func (b *MAWSBucket) Uploadfile(maws *MAWS, key string, localname string) error {
-	//
-	uploader := s3manager.NewUploader(maws.AWS)
+func (b *MAWSBucket) Uploadfile(key string, localname string) error {
+	// TODO: podobne jako Download
+	uploader := s3manager.NewUploader(b.AWS)
 
-	//
+	// obsluha lokalniho souboru
 	file, err := os.Open(localname)
-	//
 	if err != nil {
 		return err
 	}
+
+	// TODO: nedela to AWS???
 	defer file.Close()
 
 	//
@@ -77,9 +93,11 @@ func (b *MAWSBucket) Uploadfile(maws *MAWS, key string, localname string) error 
 
 // ---------------------------------------------------------------------------
 // List content of bucket
-func (b *MAWSBucket) ListObjects(maws *MAWS) (*s3.ListObjectsV2Output, error) {
+func (b *MAWSBucket) ListObjects() (*s3.ListObjectsV2Output, error) {
 	//
-	resp, err := b.Handle.ListObjectsV2(&s3.ListObjectsV2Input{Bucket: aws.String(b.BucketName)})
+	resp, err := b.Handle.ListObjectsV2(&s3.ListObjectsV2Input{
+		Bucket: aws.String(b.BucketName),
+	})
 
 	//
 	return resp, err
@@ -87,9 +105,9 @@ func (b *MAWSBucket) ListObjects(maws *MAWS) (*s3.ListObjectsV2Output, error) {
 
 // ---------------------------------------------------------------------------
 // List content of bucket
-func (b *MAWSBucket) ListObjectKeys(maws *MAWS) ([]string, error) {
+func (b *MAWSBucket) ListObjectKeys() ([]string, error) {
 	//
-	resp, err := b.ListObjects(maws)
+	resp, err := b.ListObjects()
 
 	//
 	if err != nil {
@@ -111,7 +129,7 @@ func (b *MAWSBucket) ListObjectKeys(maws *MAWS) ([]string, error) {
 
 // ---------------------------------------------------------------------------
 // List content of bucket
-func (b *MAWSBucket) DeleteKey(maws *MAWS, key string) error {
+func (b *MAWSBucket) DeleteKey(key string) error {
 	//
 	_, err := b.Handle.DeleteObject(&s3.DeleteObjectInput{
 		Bucket: aws.String(b.BucketName),
