@@ -43,3 +43,13 @@ func MAWSSetRegion(regionCode string) {
 	//
 	os.Setenv("AWS_DEFAULT_REGION", regionCode)
 }
+
+// ---------------------------------------------------------------------------
+//
+func Ifpanic(e error) {
+	//
+	if e != nil {
+		//
+		panic(e)
+	}
+}

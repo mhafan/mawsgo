@@ -1,6 +1,7 @@
 package mawsgo
 
 import (
+	"bytes"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -40,13 +41,13 @@ func (maws *MAWS) MAWSMakeBucket(name string) *MAWSBucket {
 
 // ---------------------------------------------------------------------------
 // Download souboru S3
-func (b *MAWSBucket) Download(key string, saveto string) error {
+func (b *MAWSBucket) DownloadToFile(key string, locFileName string) error {
 	// TODO: musi nutne vznikat pro kazdou operaci?
 	// je v tom nejaka vyznamna casova rezie?
 	downloader := s3manager.NewDownloader(b.AWS)
 
 	// obsluha lokalniho souboru
-	f, err := os.Create(saveto)
+	f, err := os.Create(locFileName)
 	if err != nil {
 		//
 		return err
@@ -67,24 +68,28 @@ func (b *MAWSBucket) Download(key string, saveto string) error {
 
 // ---------------------------------------------------------------------------
 // Upload of S3 file
-func (b *MAWSBucket) Uploadfile(key string, localname string) error {
-	// TODO: podobne jako Download
-	uploader := s3manager.NewUploader(b.AWS)
-
+func (b *MAWSBucket) UploadLocalFile(key string, locFileName string) error {
 	// obsluha lokalniho souboru
-	file, err := os.Open(localname)
+	file, err := os.ReadFile(locFileName)
 	if err != nil {
 		return err
 	}
 
-	// TODO: nedela to AWS???
-	defer file.Close()
+	//
+	return b.UploadContent(key, file)
+}
+
+// ---------------------------------------------------------------------------
+// Upload of S3 file - file content (binary)
+func (b *MAWSBucket) UploadContent(key string, content []byte) error {
+	// ...
+	uploader := s3manager.NewUploader(b.AWS)
 
 	//
-	_, err = uploader.Upload(&s3manager.UploadInput{
+	_, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(b.BucketName),
 		Key:    aws.String(key),
-		Body:   file,
+		Body:   bytes.NewReader(content),
 	})
 
 	//
