@@ -20,6 +20,16 @@ type MAWSLambdaResponse struct {
 }
 
 // ---------------------------------------------------------------------------
+//
+func (m *MAWSLambdaResponse) JSON() string {
+	//
+	v, _ := json.Marshal(m)
+
+	//
+	return string(v)
+}
+
+// ---------------------------------------------------------------------------
 // Invokace Lambdy (na strane AWS). Velmi opatrne ;)
 // Pozn.: V aplikaci by jedna Lambda funkce snad radeji nemela volat jinou ;)
 func (maws *MAWS) MAWSCallLambda(funName string, args interface{}) ([]byte, error) {
