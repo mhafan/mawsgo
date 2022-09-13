@@ -2,7 +2,9 @@ package mawsgo
 
 import (
 	"bytes"
+	"errors"
 	"os"
+	"path/filepath"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -19,7 +21,7 @@ import (
 // - Uploadfile
 // - ListObjectKeys
 // - DeleteKey
-type MAWSBucket struct {
+type Bucket struct {
 	//
 	BucketName string
 	Handle     *s3.S3
@@ -29,10 +31,39 @@ type MAWSBucket struct {
 }
 
 // ---------------------------------------------------------------------------
-// vytvoreni Handle na S3:bucket
-func (maws *MAWS) MAWSMakeBucket(name string) *MAWSBucket {
+//
+type BucketKey struct {
 	//
-	return &MAWSBucket{
+	FileName string
+	Prefix   string
+
+	//
+	Bucket *Bucket
+}
+
+// ---------------------------------------------------------------------------
+//
+func (b *Bucket) MakeKey(prefix, name string) *BucketKey {
+	//
+	return &BucketKey{
+		FileName: name,
+		Prefix:   prefix,
+		Bucket:   b,
+	}
+}
+
+// ---------------------------------------------------------------------------
+//
+func (bk *BucketKey) Key() string {
+	//
+	return filepath.Join(bk.Prefix, bk.FileName)
+}
+
+// ---------------------------------------------------------------------------
+// vytvoreni Handle na S3:bucket
+func (maws *MAWS) MakeBucket(name string) *Bucket {
+	//
+	return &Bucket{
 		BucketName: name,
 		Handle:     s3.New(maws.AWS),
 		AWS:        maws.AWS,
@@ -41,13 +72,13 @@ func (maws *MAWS) MAWSMakeBucket(name string) *MAWSBucket {
 
 // ---------------------------------------------------------------------------
 // Download souboru S3
-func (b *MAWSBucket) DownloadToFile(key string, locFileName string) error {
+func (bk *BucketKey) Download(locFile *LocFile) error {
 	// TODO: musi nutne vznikat pro kazdou operaci?
 	// je v tom nejaka vyznamna casova rezie?
-	downloader := s3manager.NewDownloader(b.AWS)
+	downloader := s3manager.NewDownloader(bk.Bucket.AWS)
 
 	// obsluha lokalniho souboru
-	f, err := os.Create(locFileName)
+	f, err := os.Create(locFile.FilePath)
 	if err != nil {
 		//
 		return err
@@ -58,8 +89,8 @@ func (b *MAWSBucket) DownloadToFile(key string, locFileName string) error {
 
 	// ...
 	_, err2 := downloader.Download(f, &s3.GetObjectInput{
-		Bucket: aws.String(b.BucketName),
-		Key:    aws.String(key),
+		Bucket: aws.String(bk.Bucket.BucketName),
+		Key:    aws.String(bk.Key()),
 	})
 
 	//
@@ -67,38 +98,55 @@ func (b *MAWSBucket) DownloadToFile(key string, locFileName string) error {
 }
 
 // ---------------------------------------------------------------------------
+//
+func S3Uploads(inarr []*LocFile) error {
+	//
+	for _, lf := range inarr {
+		//
+		if lf.S3Connect == nil {
+			//
+			return errors.New("Chybi S3Connect na LF")
+		}
+
+		//
+		if _err := lf.S3Connect.Upload(lf); _err != nil {
+			//
+			return _err
+		}
+	}
+
+	//
+	return nil
+}
+
+// ---------------------------------------------------------------------------
 // Upload of S3 file
-func (b *MAWSBucket) UploadLocalFile(key string, locFileName string) error {
+func (bk *BucketKey) Upload(locFile *LocFile) error {
 	// obsluha lokalniho souboru
-	file, err := os.ReadFile(locFileName)
+	cont, err := locFile.Read()
+
+	//
 	if err != nil {
 		return err
 	}
 
-	//
-	return b.UploadContent(key, file)
-}
-
-// ---------------------------------------------------------------------------
-// Upload of S3 file - file content (binary)
-func (b *MAWSBucket) UploadContent(key string, content []byte) error {
 	// ...
-	uploader := s3manager.NewUploader(b.AWS)
+	uploader := s3manager.NewUploader(bk.Bucket.AWS)
 
 	//
-	_, err := uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(b.BucketName),
-		Key:    aws.String(key),
-		Body:   bytes.NewReader(content),
+	_, errUp := uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(bk.Bucket.BucketName),
+		Key:    aws.String(bk.Key()),
+		Body:   bytes.NewReader(cont),
 	})
 
 	//
-	return err
+	return errUp
 }
 
 // ---------------------------------------------------------------------------
 // List content of bucket
-func (b *MAWSBucket) ListObjects() (*s3.ListObjectsV2Output, error) {
+func (b *Bucket) ListObjects() (*s3.ListObjectsV2Output, error) {
 	//
 	resp, err := b.Handle.ListObjectsV2(&s3.ListObjectsV2Input{
 		Bucket: aws.String(b.BucketName),
@@ -110,7 +158,7 @@ func (b *MAWSBucket) ListObjects() (*s3.ListObjectsV2Output, error) {
 
 // ---------------------------------------------------------------------------
 // List content of bucket
-func (b *MAWSBucket) ListObjectKeys() ([]string, error) {
+func (b *Bucket) ListObjectKeys() ([]string, error) {
 	//
 	resp, err := b.ListObjects()
 
@@ -134,7 +182,7 @@ func (b *MAWSBucket) ListObjectKeys() ([]string, error) {
 
 // ---------------------------------------------------------------------------
 // List content of bucket
-func (b *MAWSBucket) DeleteKey(key string) error {
+func (b *Bucket) DeleteKey(key string) error {
 	//
 	_, err := b.Handle.DeleteObject(&s3.DeleteObjectInput{
 		Bucket: aws.String(b.BucketName),

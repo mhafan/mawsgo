@@ -1,6 +1,16 @@
 package mawsgo
 
-import "encoding/base64"
+import (
+	"encoding/base64"
+
+	"github.com/google/uuid"
+)
+
+//
+func MAWSUUID() string {
+	//
+	return uuid.NewString()
+}
 
 //
 func Base64EncodeString(str *string) string {

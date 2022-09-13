@@ -2,11 +2,21 @@ package mawsgo
 
 import (
 	"encoding/json"
+	"os"
+	"os/exec"
 	"strconv"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/lambda"
 )
+
+// ---------------------------------------------------------------------------
+//
+func LambdaTesting() bool {
+	//
+	return true
+}
 
 // ---------------------------------------------------------------------------
 // Vystup z Lambdy
@@ -17,6 +27,24 @@ type MAWSLambdaResponse struct {
 	Status int
 	// JSON navratove hodnoty dobrovolne
 	Body string
+}
+
+// ---------------------------------------------------------------------------
+//
+func LocalExec(cmdString string) error {
+	//
+	cmd := exec.Command("sh", "-cex", strings.TrimSpace(cmdString))
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	// -----------------------------------------------------------------------
+	// spusteni. navratova chyba
+	if err_run := cmd.Run(); err_run != nil {
+		//
+		return err_run
+	}
+
+	return nil
 }
 
 // ---------------------------------------------------------------------------
