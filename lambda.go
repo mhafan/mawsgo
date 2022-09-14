@@ -60,7 +60,7 @@ func (m *MAWSLambdaResponse) JSON() string {
 // ---------------------------------------------------------------------------
 // Invokace Lambdy (na strane AWS). Velmi opatrne ;)
 // Pozn.: V aplikaci by jedna Lambda funkce snad radeji nemela volat jinou ;)
-func (maws *MAWS) MAWSCallLambda(funName string, args interface{}) ([]byte, error) {
+func (maws *MAWS) MAWSCallLambda(funName string, async bool, args interface{}) ([]byte, error) {
 	// Handle na volani AWS/Lambda
 	client := lambda.New(maws.AWS)
 
@@ -73,11 +73,20 @@ func (maws *MAWS) MAWSCallLambda(funName string, args interface{}) ([]byte, erro
 		return []byte{}, _encoError
 	}
 
-	// invokace: jmeno funkce + payload
-	_resp, _err := client.Invoke(&lambda.InvokeInput{
+	//
+	_args := &lambda.InvokeInput{
 		FunctionName: aws.String(funName),
 		Payload:      _enco,
-	})
+	}
+
+	//
+	if async {
+		//
+		_args.InvocationType = aws.String("Event")
+	}
+
+	// invokace: jmeno funkce + payload
+	_resp, _err := client.Invoke(_args)
 
 	//
 	return _resp.Payload, _err
@@ -87,7 +96,7 @@ func (maws *MAWS) MAWSCallLambda(funName string, args interface{}) ([]byte, erro
 // Invokace se vstupnim a vystupnim kodovanim
 func (maws *MAWS) MAWSCallLambdaResponse(funName string, args, resp interface{}) error {
 	// volani s parametry
-	_calling, _cerr := maws.MAWSCallLambda(funName, args)
+	_calling, _cerr := maws.MAWSCallLambda(funName, false, args)
 
 	// ...
 	if _cerr != nil {
