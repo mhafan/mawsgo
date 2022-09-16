@@ -101,7 +101,7 @@ func (lf *LocFile) ReadString() string {
 	cont, err := lf.Read()
 
 	//
-	if err == nil {
+	if err != nil {
 		//
 		return ""
 	}
