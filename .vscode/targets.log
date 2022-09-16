@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Fri Sep 16 10:37:37 2022
+# Make data base, printed on Fri Sep 16 12:04:10 2022
 
 # Variables
 
@@ -73,7 +73,7 @@ DISPLAY = /private/tmp/com.apple.launchd.APfPKh2elG/org.macosforge.xquartz:0
 # environment
 PS_HTTPG_SPORT = 8091
 # environment
-CLOUDSDK_METRICS_ENVIRONMENT_VERSION = 1.20.1
+CLOUDSDK_METRICS_ENVIRONMENT_VERSION = 1.20.2
 # environment
 PWD = /Users/hrubym/go/src/mawsgo
 # environment
@@ -204,6 +204,7 @@ all:
 #  Command-line target.
 #  Implicit rule search has been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
@@ -298,11 +299,10 @@ buildimage:
 # No general (`VPATH' variable) search path.
 
 # # of strings in strcache: 1
- 
 # # of strcache buffers: 1
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Fri Sep 16 10:37:37 2022
+# Finished Make data base on Fri Sep 16 12:04:10 2022
 
  

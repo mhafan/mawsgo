@@ -96,6 +96,13 @@ func (lf *LocFile) Read() ([]byte, error) {
 
 // ---------------------------------------------------------------------------
 //
+func (lf *LocFile) Hehe() string {
+	//
+	return "napicu-system"
+}
+
+// ---------------------------------------------------------------------------
+//
 func (lf *LocFile) ReadString() string {
 	//
 	cont, err := lf.Read()
