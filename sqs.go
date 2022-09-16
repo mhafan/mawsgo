@@ -11,7 +11,7 @@ import (
 
 // ---------------------------------------------------------------------------
 //
-type MAWSMessageQueue struct {
+type MessageQueue struct {
 	//
 	QueueName string
 	QueueURL  string
@@ -23,9 +23,9 @@ type MAWSMessageQueue struct {
 
 // ---------------------------------------------------------------------------
 //
-func (maws *MAWS) MAWSMakeMessageQueue(qName string) (*MAWSMessageQueue, error) {
+func (maws *MAWS) MakeMessageQueue(qName string) (*MessageQueue, error) {
 	//
-	var _sqs = &MAWSMessageQueue{
+	var _sqs = &MessageQueue{
 		AWS:       maws.AWS,
 		QueueName: qName,
 		Handle:    sqs.New(maws.AWS),
@@ -51,7 +51,7 @@ func (maws *MAWS) MAWSMakeMessageQueue(qName string) (*MAWSMessageQueue, error) 
 
 // ---------------------------------------------------------------------------
 //
-func (msgs *MAWSMessageQueue) SendMsg(body string) error {
+func (msgs *MessageQueue) SendMsg(body string) error {
 	//
 	_, era := msgs.Handle.SendMessage(&sqs.SendMessageInput{
 		MessageBody: aws.String(body),
@@ -64,7 +64,7 @@ func (msgs *MAWSMessageQueue) SendMsg(body string) error {
 
 // ---------------------------------------------------------------------------
 //
-func (msgs *MAWSMessageQueue) SendMsgJSON(body, argKey string, arg interface{}) error {
+func (msgs *MessageQueue) SendMsgJSON(body, argKey string, arg interface{}) error {
 	//
 	_, era := msgs.Handle.SendMessage(&sqs.SendMessageInput{
 		MessageAttributes: map[string]*sqs.MessageAttributeValue{
@@ -80,7 +80,7 @@ func (msgs *MAWSMessageQueue) SendMsgJSON(body, argKey string, arg interface{}) 
 
 // ---------------------------------------------------------------------------
 //
-func (msgs *MAWSMessageQueue) ReceiveMsgs(limit, timeOut int) ([]*sqs.Message, error) {
+func (msgs *MessageQueue) ReceiveMsgs(limit, timeOut int) ([]*sqs.Message, error) {
 	//
 	msgResult, err := msgs.Handle.ReceiveMessage(&sqs.ReceiveMessageInput{
 		AttributeNames: []*string{
@@ -100,7 +100,7 @@ func (msgs *MAWSMessageQueue) ReceiveMsgs(limit, timeOut int) ([]*sqs.Message, e
 
 // ---------------------------------------------------------------------------
 //
-func (msgs *MAWSMessageQueue) DeleteMsg(msg *sqs.Message) error {
+func (msgs *MessageQueue) DeleteMsg(msg *sqs.Message) error {
 	//
 	_, __err := msgs.Handle.DeleteMessage(&sqs.DeleteMessageInput{
 		QueueUrl:      &msgs.QueueURL,
@@ -113,7 +113,7 @@ func (msgs *MAWSMessageQueue) DeleteMsg(msg *sqs.Message) error {
 
 // ---------------------------------------------------------------------------
 //
-func (msgs *MAWSMessageQueue) DeleteMsgHandle(msg string) error {
+func (msgs *MessageQueue) DeleteMsgHandle(msg string) error {
 	//
 	_, __err := msgs.Handle.DeleteMessage(&sqs.DeleteMessageInput{
 		QueueUrl:      &msgs.QueueURL,

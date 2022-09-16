@@ -95,6 +95,29 @@ func (lf *LocFile) Read() ([]byte, error) {
 }
 
 // ---------------------------------------------------------------------------
+//
+func (lf *LocFile) ReadString() string {
+	//
+	cont, err := lf.Read()
+
+	//
+	if err == nil {
+		//
+		return ""
+	}
+
+	//
+	return string(cont)
+}
+
+// ---------------------------------------------------------------------------
+//
+func (lf *LocFile) Delete() error {
+	//
+	return os.Remove(lf.FilePath)
+}
+
+// ---------------------------------------------------------------------------
 // Transformuj LF -> Bucket+key
 func (lf *LocFile) BucketKey(bucket *Bucket, prefixed string) *BucketKey {
 	//
