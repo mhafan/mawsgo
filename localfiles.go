@@ -103,7 +103,7 @@ func (lf *LocFile) ReadString() string {
 	//
 	if err != nil {
 		//
-		return ""
+		return "--error--"
 	}
 
 	//
