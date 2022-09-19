@@ -38,6 +38,22 @@ type PlainMessage struct {
 }
 
 // ---------------------------------------------------------------------------
+//
+func (pl *PlainMessage) GetAttr(key, def string) string {
+	//
+	_val, _ok := pl.Attrs[key]
+
+	//
+	if _ok {
+		//
+		return _val
+	}
+
+	//
+	return def
+}
+
+// ---------------------------------------------------------------------------
 // Dekodovani prichozi zpravy do jeji zakladni podstaty
 func DecodeMessage(inm *events.SQSMessage) *PlainMessage {
 	//
