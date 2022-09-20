@@ -6,8 +6,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
 
-# Make data base, printed on Mon Sep 19 14:16:23 2022
+
+# Make data base, printed on Tue Sep 20 16:09:58 2022
 
 # Variables
 
@@ -28,7 +31,7 @@ SHELL = /bin/sh
 # environment
 PS_PSQL_USER = trezor
 # environment
-VSCODE_NLS_CONFIG = {"locale":"cs","availableLanguages":{"*":"cs"},"_languagePackId":"12a62fa1fb994bb84e2f3b545543b517.cs","_translationsConfigFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/tcf.json","_cacheRoot":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs","_resolvedLanguagePackCoreLocation":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/784b0177c56c607789f9638da7b6bf3230d47a8c","_corruptedFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"cs","availableLanguages":{"*":"cs"},"_languagePackId":"12a62fa1fb994bb84e2f3b545543b517.cs","_translationsConfigFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/tcf.json","_cacheRoot":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs","_resolvedLanguagePackCoreLocation":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/e7f30e38c5a4efafeec8ad52861eb772a9ee4dfb","_corruptedFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 1)
@@ -56,17 +59,19 @@ PS_PSQL_PORT = 5432
 # environment
 GOPATH = /Users/hrubym/go
 # environment
+LaunchInstanceID = AB97E796-D1AC-4438-BB5D-8621FE029308
+# environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
 CLOUDSDK_METRICS_ENVIRONMENT = cloudcode.vscode
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.d374qmunwS/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.2RbKytN8JW/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
-DISPLAY = /private/tmp/com.apple.launchd.APfPKh2elG/org.macosforge.xquartz:0
+DISPLAY = /private/tmp/com.apple.launchd.QaHrJhq7tp/org.macosforge.xquartz:0
 # environment
 PS_HTTPG_SPORT = 8091
 # environment
@@ -84,7 +89,7 @@ AWS_LAMBDA =
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/hrubym/Library/Application Support/Code/CachedData/784b0177c56c607789f9638da7b6bf3230d47a8c
+VSCODE_CODE_CACHE_PATH = /Users/hrubym/Library/Application Support/Code/CachedData/e7f30e38c5a4efafeec8ad52861eb772a9ee4dfb
 # environment
 LOGNAME = hrubym
 # environment
@@ -130,7 +135,7 @@ TMPDIR = /var/folders/9h/0pk1nnt11vn1xz706sbb1tww0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/hrubym/Library/Application Support/Code/1.71.0-main.sock
+VSCODE_IPC_HOOK = /Users/hrubym/Library/Application Support/Code/1.71.1-main.sock
 # environment
 MallocNanoZone = 0
 # environment
@@ -142,7 +147,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.46368180.46368186
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.50574476.50574482
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -163,6 +168,8 @@ LOC_IMG = cosi
 LC_ALL = C
 # environment
 PS_PSQL_DBNAME = trezor
+# environment
+SECURITYSESSIONID = 186a5
 # automatic
 ^F = $(notdir $^)
 # default
@@ -176,9 +183,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 45192
+VSCODE_PID = 1557
 # variable set hash-table stats:
-# Load=83/1024=8%, Rehash=0, Collisions=2/108=2%
+# Load=85/1024=8%, Rehash=0, Collisions=2/110=2%
 
 # Pattern-specific Variable Values
 
@@ -282,9 +289,6 @@ buildimage:
 #  commands to execute (from `Makefile', line 37):
 	docker build -t $(LOC_IMG) .
 	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ECR)
- 
-make: *** No rule to make target `all'.  Stop.
-
 	docker tag $(LOC_IMG) $(AWS_ECR_IMG)
 	docker push $(AWS_ECR_IMG)
 	
@@ -293,6 +297,7 @@ make: *** No rule to make target `all'.  Stop.
 # Load=11/1024=1%, Rehash=0, Collisions=0/26=0%
 # VPATH Search Paths
 
+ 
 # No `vpath' search paths.
 
 # No general (`VPATH' variable) search path.
@@ -302,6 +307,6 @@ make: *** No rule to make target `all'.  Stop.
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Sep 19 14:16:23 2022
+# Finished Make data base on Tue Sep 20 16:09:58 2022
 
  

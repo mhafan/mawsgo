@@ -130,6 +130,13 @@ func (bk *BucketKey) Upload(locFile *LocFile) error {
 		return err
 	}
 
+	//
+	return bk.UploadContent(cont)
+}
+
+// ---------------------------------------------------------------------------
+// Upload of S3 file
+func (bk *BucketKey) UploadContent(cont []byte) error {
 	// ...
 	uploader := s3manager.NewUploader(bk.Bucket.AWS)
 

@@ -6,16 +6,13 @@ import "os"
 // system ENV | def ->
 func Env(envName, defValue string) string {
 	//
-	val := os.Getenv(envName)
-
-	//
-	if len(val) <= 0 {
+	if val := os.Getenv(envName); len(val) > 0 {
 		//
-		return defValue
+		return val
 	}
 
 	//
-	return val
+	return defValue
 }
 
 // ---------------------------------------------------------------------------
