@@ -1,29 +1,31 @@
 package mawsgo
 
+//
 import (
 	"os"
 	"path/filepath"
 )
 
 // ---------------------------------------------------------------------------
-// Datova struktura lokalniho souboru
+// Datova struktura lokalniho souboru + zakladni operace
 // ---------------------------------------------------------------------------
 // Struktura muze vzniknout:
 // - tmp adresar + jmeno
 // - cela cesta
 type LocFile struct {
-	// jmeno souboru
+	// jmeno souboru - cosi.ext
 	Name string
 
 	// kompletni cesta k souboru
 	FilePath string
 
-	// napojeni na S3 bucket
+	// pripadne (!!!) napojeni na S3 bucket
+	// tj smi byt nil
 	S3Connect *BucketKey
 }
 
 // ---------------------------------------------------------------------------
-// Lambda TMP file
+// Lambda TMP file (predpokladam AWS Lambda ma pristupne /tmp pro zapis)
 // - name muze byt prazdne -> nahodne pridelene jmeno souboru
 func TmpFile(name string) *LocFile {
 	// pokud je prazdnota
@@ -40,9 +42,9 @@ func TmpFile(name string) *LocFile {
 }
 
 // ---------------------------------------------------------------------------
-// celkova cesta k souboru
+// celkova cesta k souboru - nedelaji se zadne velke kontroly spravnosti
 func PathFile(efilePath string) *LocFile {
-	//
+	// potrebuju zaklad jmena
 	_, fn := filepath.Split(efilePath)
 
 	//
@@ -53,9 +55,9 @@ func PathFile(efilePath string) *LocFile {
 }
 
 // ---------------------------------------------------------------------------
-//
+// Prirazeni S3 obrazu lokalnimu souboru
 func (lf *LocFile) S3(bucket *Bucket, prefixed string) *LocFile {
-	//
+	// handle na obraz lokalniho souboru do S3
 	lf.S3Connect = bucket.MakeKey(prefixed, lf.Name)
 
 	return lf
@@ -76,9 +78,11 @@ func (lf *LocFile) SaveBin(content []byte) error {
 
 	//
 	if errOpen != nil {
+		//
 		return errOpen
 	}
 
+	// nezapomenout ;)
 	defer f.Close()
 
 	_, err2 := f.Write(content)
@@ -95,14 +99,7 @@ func (lf *LocFile) Read() ([]byte, error) {
 }
 
 // ---------------------------------------------------------------------------
-//
-func (lf *LocFile) Hehe() string {
-	//
-	return "napicu-system"
-}
-
-// ---------------------------------------------------------------------------
-//
+// Zjednodusena varianta -> vraci cosi pri chybe
 func (lf *LocFile) ReadString() string {
 	//
 	cont, err := lf.Read()
@@ -118,7 +115,7 @@ func (lf *LocFile) ReadString() string {
 }
 
 // ---------------------------------------------------------------------------
-//
+// ...
 func (lf *LocFile) Delete() error {
 	//
 	return os.Remove(lf.FilePath)

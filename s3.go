@@ -2,7 +2,6 @@ package mawsgo
 
 import (
 	"bytes"
-	"errors"
 	"os"
 	"path/filepath"
 
@@ -28,35 +27,10 @@ type Bucket struct {
 
 	// handle na spojeni AWS (kopiruje se)
 	AWS *session.Session
-}
-
-// ---------------------------------------------------------------------------
-//
-type BucketKey struct {
-	//
-	FileName string
-	Prefix   string
 
 	//
-	Bucket *Bucket
-}
-
-// ---------------------------------------------------------------------------
-//
-func (b *Bucket) MakeKey(prefix, name string) *BucketKey {
-	//
-	return &BucketKey{
-		FileName: name,
-		Prefix:   prefix,
-		Bucket:   b,
-	}
-}
-
-// ---------------------------------------------------------------------------
-//
-func (bk *BucketKey) Key() string {
-	//
-	return filepath.Join(bk.Prefix, bk.FileName)
+	Downloader *s3manager.Downloader
+	Uploader   *s3manager.Uploader
 }
 
 // ---------------------------------------------------------------------------
@@ -67,16 +41,43 @@ func (maws *MAWS) MakeBucket(name string) *Bucket {
 		BucketName: name,
 		Handle:     s3.New(maws.AWS),
 		AWS:        maws.AWS,
+		Downloader: s3manager.NewDownloader(maws.AWS),
+		Uploader:   s3manager.NewUploader(maws.AWS),
 	}
+}
+
+// ---------------------------------------------------------------------------
+// Predstavuje jeden S3-objekt (soubor) ulozeny v bucket na nejakem prefixu
+type BucketKey struct {
+	// nazev objektu
+	FileName string
+	// prefix
+	Prefix string
+	// handle na prislusny S3-bucket
+	Bucket *Bucket
+}
+
+// ---------------------------------------------------------------------------
+// Konstrukce handle na S3 objekt nadd zadanym S3-bucket
+func (b *Bucket) MakeKey(prefix, name string) *BucketKey {
+	//
+	return &BucketKey{
+		FileName: name,
+		Prefix:   prefix,
+		Bucket:   b,
+	}
+}
+
+// ---------------------------------------------------------------------------
+// prefix+name
+func (bk *BucketKey) Key() string {
+	//
+	return filepath.Join(bk.Prefix, bk.FileName)
 }
 
 // ---------------------------------------------------------------------------
 // Download souboru S3
 func (bk *BucketKey) Download(locFile *LocFile) error {
-	// TODO: musi nutne vznikat pro kazdou operaci?
-	// je v tom nejaka vyznamna casova rezie?
-	downloader := s3manager.NewDownloader(bk.Bucket.AWS)
-
 	// obsluha lokalniho souboru
 	f, err := os.Create(locFile.FilePath)
 	if err != nil {
@@ -88,35 +89,13 @@ func (bk *BucketKey) Download(locFile *LocFile) error {
 	defer f.Close()
 
 	// ...
-	_, err2 := downloader.Download(f, &s3.GetObjectInput{
+	_, err2 := bk.Bucket.Downloader.Download(f, &s3.GetObjectInput{
 		Bucket: aws.String(bk.Bucket.BucketName),
 		Key:    aws.String(bk.Key()),
 	})
 
 	//
 	return err2
-}
-
-// ---------------------------------------------------------------------------
-//
-func S3Uploads(inarr []*LocFile) error {
-	//
-	for _, lf := range inarr {
-		//
-		if lf.S3Connect == nil {
-			//
-			return errors.New("Chybi S3Connect na LF")
-		}
-
-		//
-		if _err := lf.S3Connect.Upload(lf); _err != nil {
-			//
-			return _err
-		}
-	}
-
-	//
-	return nil
 }
 
 // ---------------------------------------------------------------------------
@@ -131,20 +110,19 @@ func (bk *BucketKey) Upload(locFile *LocFile) error {
 	}
 
 	//
-	return bk.UploadContent(cont)
+	return bk.UploadContent(bytes.NewReader(cont))
 }
 
 // ---------------------------------------------------------------------------
 // Upload of S3 file
-func (bk *BucketKey) UploadContent(cont []byte) error {
-	// ...
-	uploader := s3manager.NewUploader(bk.Bucket.AWS)
-
+func (bk *BucketKey) UploadContent(readStream *bytes.Reader) error {
 	//
-	_, errUp := uploader.Upload(&s3manager.UploadInput{
+	_, errUp := bk.Bucket.Uploader.Upload(&s3manager.UploadInput{
+		// identifikace
 		Bucket: aws.String(bk.Bucket.BucketName),
 		Key:    aws.String(bk.Key()),
-		Body:   bytes.NewReader(cont),
+		// obsah
+		Body: readStream,
 	})
 
 	//
