@@ -6,11 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
-make: *** No rule to make target `all'.  Stop.
 
-
-# Make data base, printed on Tue Sep 20 16:09:58 2022
+# Make data base, printed on Mon Sep 26 14:04:33 2022
 
 # Variables
 
@@ -31,11 +28,11 @@ SHELL = /bin/sh
 # environment
 PS_PSQL_USER = trezor
 # environment
-VSCODE_NLS_CONFIG = {"locale":"cs","availableLanguages":{"*":"cs"},"_languagePackId":"12a62fa1fb994bb84e2f3b545543b517.cs","_translationsConfigFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/tcf.json","_cacheRoot":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs","_resolvedLanguagePackCoreLocation":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/e7f30e38c5a4efafeec8ad52861eb772a9ee4dfb","_corruptedFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"cs","availableLanguages":{"*":"cs"},"_languagePackId":"12a62fa1fb994bb84e2f3b545543b517.cs","_translationsConfigFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/tcf.json","_cacheRoot":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs","_resolvedLanguagePackCoreLocation":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/74b1f979648cc44d385a2286793c226e611f59e7","_corruptedFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
-# makefile (from `Makefile', line 1)
-MAKEFILE_LIST :=  Makefile
+# makefile
+MAKEFILE_LIST := 
 # environment
 GO111MODULE = on
 # environment
@@ -58,8 +55,6 @@ PS_WEB_PORT = 8080
 PS_PSQL_PORT = 5432
 # environment
 GOPATH = /Users/hrubym/go
-# environment
-LaunchInstanceID = AB97E796-D1AC-4438-BB5D-8621FE029308
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
@@ -84,18 +79,14 @@ ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 GOMODCACHE = /Users/hrubym/go/pkg/mod
 # environment
 HOME = /Users/hrubym
-# makefile (from `Makefile', line 7)
-AWS_LAMBDA = 
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/hrubym/Library/Application Support/Code/CachedData/e7f30e38c5a4efafeec8ad52861eb772a9ee4dfb
+VSCODE_CODE_CACHE_PATH = /Users/hrubym/Library/Application Support/Code/CachedData/74b1f979648cc44d385a2286793c226e611f59e7
 # environment
 LOGNAME = hrubym
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
-# makefile (from `Makefile', line 5)
-AWS_ID = 
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -113,15 +104,11 @@ MAKE_VERSION := 3.81
 # environment
 USER = hrubym
 # makefile
-.DEFAULT_GOAL := lib
-# makefile (from `Makefile', line 9)
-AWS_ROLE = 
+.DEFAULT_GOAL := 
 # environment
 PS_HTTPG_HOST = localhost
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
-# makefile (from `Makefile', line 13)
-AWS_ECR = $(AWS_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 # environment
 PS_HTTPG_PORT = 8090
 # environment
@@ -135,7 +122,7 @@ TMPDIR = /var/folders/9h/0pk1nnt11vn1xz706sbb1tww0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/hrubym/Library/Application Support/Code/1.71.1-main.sock
+VSCODE_IPC_HOOK = /Users/hrubym/Library/Application Support/Code/1.71.2-main.sock
 # environment
 MallocNanoZone = 0
 # environment
@@ -152,40 +139,34 @@ XPC_SERVICE_NAME = application.com.microsoft.VSCode.50574476.50574482
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
-# makefile (from `Makefile', line 14)
-AWS_ECR_IMG = $(AWS_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/$(LOC_IMG)
 # environment
 __CF_USER_TEXT_ENCODING = 0x1F5:0x1D:0x38
 # environment
 COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
-# makefile (from `Makefile', line 12)
-LOC_IMG = cosi
 # automatic
 <F = $(notdir $<)
 # environment
 LC_ALL = C
 # environment
 PS_PSQL_DBNAME = trezor
-# environment
-SECURITYSESSIONID = 186a5
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
 # default
 .INCLUDE_DIRS = /usr/local/include
-# makefile (from `Makefile', line 10)
+# environment
 AWS_REGION = eu-central-1
 # environment
 MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1557
+VSCODE_PID = 22075
 # variable set hash-table stats:
-# Load=85/1024=8%, Rehash=0, Collisions=2/110=2%
+# Load=77/1024=8%, Rehash=0, Collisions=2/98=2%
 
 # Pattern-specific Variable Values
 
@@ -193,9 +174,9 @@ VSCODE_PID = 1557
 
 # Directories
 
-# . (device 16777221, inode 44550071): 18 files, no impossibilities.
+# . (device 16777221, inode 44550071): 17 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -212,53 +193,31 @@ all:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-zip: main.go
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  commands to execute (from `Makefile', line 23):
-	GOOS=linux CGO_ENABLED=0 go build -o mainzip main.go
-	zip mainzip.zip mainzip
-	
-
 # Not a target:
 .SUFFIXES:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-push:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  commands to execute (from `Makefile', line 17):
-	git add *
-	git commit -m 'Makefile push'
-	git push
-	
-
 # Not a target:
 Makefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
 #  Implicit rule search has been done.
-#  Last modified 2022-08-16 14:46:02
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Failed to be updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-lib:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  commands to execute (from `Makefile', line 2):
-	go build
-	
-
 # Not a target:
-main.go:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+makefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 .DEFAULT:
@@ -266,47 +225,31 @@ main.go:
 #  Modification time never checked.
 #  File has not been updated.
 
-updatelambda: zip
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  commands to execute (from `Makefile', line 33):
-	aws lambda update-function-code --function-name $(AWS_LAMBDA) --zip-file fileb://mainzip.zip
-	
-
-createlambda: zip
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  commands to execute (from `Makefile', line 29):
-	aws lambda create-function --function-name $(AWS_LAMBDA) --runtime go1.x --handle mainzip --zip-file fileb://mainzip.zip --role $(AWS_ROLE)
-	
-
-buildimage:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  commands to execute (from `Makefile', line 37):
-	docker build -t $(LOC_IMG) .
-	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ECR)
-	docker tag $(LOC_IMG) $(AWS_ECR_IMG)
-	docker push $(AWS_ECR_IMG)
-	
+# Not a target:
+GNUmakefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # files hash-table stats:
-# Load=11/1024=1%, Rehash=0, Collisions=0/26=0%
+# Load=6/1024=1%, Rehash=0, Collisions=0/17=0%
 # VPATH Search Paths
 
- 
 # No `vpath' search paths.
 
 # No general (`VPATH' variable) search path.
 
-# # of strings in strcache: 1
-# # of strcache buffers: 1
-# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
-# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+# # of strings in strcache: 0
+# # of strcache buffers: 0
+# strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
+# strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Tue Sep 20 16:09:58 2022
+# Finished Make data base on Mon Sep 26 14:04:33 2022
 
  
+make: *** No rule to make target `all'.  Stop.
+

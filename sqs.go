@@ -41,10 +41,7 @@ type PlainMessage struct {
 //
 func (pl *PlainMessage) GetAttr(key, def string) string {
 	//
-	_val, _ok := pl.Attrs[key]
-
-	//
-	if _ok {
+	if _val, _ok := pl.Attrs[key]; _ok {
 		//
 		return _val
 	}
@@ -65,7 +62,10 @@ func DecodeMessage(inm *events.SQSMessage) *PlainMessage {
 	//
 	for k, v := range inm.MessageAttributes {
 		//
-		_out.Attrs[k] = *v.StringValue
+		if v.StringValue != nil {
+			//
+			_out.Attrs[k] = *v.StringValue
+		}
 	}
 
 	//
@@ -107,10 +107,7 @@ func (maws *MAWS) MakeMessageQueue_(qName string) *MessageQueue {
 	_sqs, _err := maws.MakeMessageQueue(qName)
 
 	//
-	if _err != nil {
-		//
-		panic(_err)
-	}
+	Ifpanic(_err)
 
 	//
 	return _sqs
