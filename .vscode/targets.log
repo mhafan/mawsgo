@@ -6,8 +6,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
 
-# Make data base, printed on Mon Sep 26 14:04:33 2022
+# Make data base, printed on Mon Feb 27 15:15:16 2023
 
 # Variables
 
@@ -15,12 +16,14 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
+# environment
+MAWSGO_EXP_URL = https://oiw8nv4nn4.execute-api.eu-central-1.amazonaws.com/testing/upload
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# automatic
-@F = $(notdir $@)
+# environment
+DIGITALOCEAN_CONTEXT = hrubym
 # makefile
 CURDIR := /Users/hrubym/go/src/mawsgo
 # makefile
@@ -28,11 +31,13 @@ SHELL = /bin/sh
 # environment
 PS_PSQL_USER = trezor
 # environment
-VSCODE_NLS_CONFIG = {"locale":"cs","availableLanguages":{"*":"cs"},"_languagePackId":"12a62fa1fb994bb84e2f3b545543b517.cs","_translationsConfigFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/tcf.json","_cacheRoot":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs","_resolvedLanguagePackCoreLocation":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/74b1f979648cc44d385a2286793c226e611f59e7","_corruptedFile":"/Users/hrubym/Library/Application Support/Code/clp/12a62fa1fb994bb84e2f3b545543b517.cs/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"cs","availableLanguages":{"*":"cs"},"_languagePackId":"9ddba929fb4c42f9588c4de4fb586337.cs","_translationsConfigFile":"/Users/hrubym/Library/Application Support/Code/clp/9ddba929fb4c42f9588c4de4fb586337.cs/tcf.json","_cacheRoot":"/Users/hrubym/Library/Application Support/Code/clp/9ddba929fb4c42f9588c4de4fb586337.cs","_resolvedLanguagePackCoreLocation":"/Users/hrubym/Library/Application Support/Code/clp/9ddba929fb4c42f9588c4de4fb586337.cs/441438abd1ac652551dbe4d408dfcec8a499b8bf","_corruptedFile":"/Users/hrubym/Library/Application Support/Code/clp/9ddba929fb4c42f9588c4de4fb586337.cs/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile
 MAKEFILE_LIST := 
+# automatic
+@F = $(notdir $@)
 # environment
 GO111MODULE = on
 # environment
@@ -46,7 +51,7 @@ VSCODE_CWD = /
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # environment
-PATH = /Users/hrubym/Library/Application Support/cloud-code/installer/google-cloud-sdk/bin:/Users/hrubym/.cargo/bin:/Applications/Julia-1.5.app/Contents/Resources/julia/bin/:/opt/local/bin:/opt/local/sbin:/Users/hrubym/knihovny/minizinc-1.6/bin:/Users/hrubym/knihovny/erl/otp_src_17.0/bin/:/Users/hrubym/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/go/bin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/hrubym/google-cloud-sdk/bin
+PATH = /Users/hrubym/Library/Application Support/cloud-code/installer/google-cloud-sdk/bin:/Users/hrubym/.cargo/bin:/Applications/Julia-1.5.app/Contents/Resources/julia/bin/:/opt/local/bin:/opt/local/sbin:/Users/hrubym/knihovny/minizinc-1.6/bin:/Users/hrubym/knihovny/erl/otp_src_17.0/bin/:/Users/hrubym/local/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/go/bin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/hrubym/google-cloud-sdk/bin
 # environment
 PS_PSQL_HOST = localhost
 # environment
@@ -62,15 +67,15 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 CLOUDSDK_METRICS_ENVIRONMENT = cloudcode.vscode
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.2RbKytN8JW/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.jQti7Csrvs/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
-DISPLAY = /private/tmp/com.apple.launchd.QaHrJhq7tp/org.macosforge.xquartz:0
+DISPLAY = /private/tmp/com.apple.launchd.hoR4Exe8eW/org.macosforge.xquartz:0
 # environment
 PS_HTTPG_SPORT = 8091
 # environment
-CLOUDSDK_METRICS_ENVIRONMENT_VERSION = 1.20.2
+CLOUDSDK_METRICS_ENVIRONMENT_VERSION = 1.21.3
 # environment
 PWD = /Users/hrubym/go/src/mawsgo
 # environment
@@ -82,7 +87,7 @@ HOME = /Users/hrubym
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/hrubym/Library/Application Support/Code/CachedData/74b1f979648cc44d385a2286793c226e611f59e7
+VSCODE_CODE_CACHE_PATH = /Users/hrubym/Library/Application Support/Code/CachedData/441438abd1ac652551dbe4d408dfcec8a499b8bf
 # environment
 LOGNAME = hrubym
 # environment
@@ -95,8 +100,8 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 XPC_FLAGS = 0x0
 # default
 MAKE = $(MAKE_COMMAND)
-# default
-MAKECMDGOALS := all
+# environment
+MAWSGO_EXP_KEY = VZi77p6H1d6wRnt5qUpOG6LHPQkC8Er19X5kr0Md
 # environment
 SHLVL = 2
 # default
@@ -105,6 +110,8 @@ MAKE_VERSION := 3.81
 USER = hrubym
 # makefile
 .DEFAULT_GOAL := 
+# default
+MAKECMDGOALS := all
 # environment
 PS_HTTPG_HOST = localhost
 # automatic
@@ -122,7 +129,7 @@ TMPDIR = /var/folders/9h/0pk1nnt11vn1xz706sbb1tww0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/hrubym/Library/Application Support/Code/1.71.2-main.sock
+VSCODE_IPC_HOOK = /Users/hrubym/Library/Application Support/Code/1.75.1-main.sock
 # environment
 MallocNanoZone = 0
 # environment
@@ -134,7 +141,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.50574476.50574482
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.58938036.58938042
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -164,9 +171,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 22075
+VSCODE_PID = 5470
 # variable set hash-table stats:
-# Load=77/1024=8%, Rehash=0, Collisions=2/98=2%
+# Load=80/1024=8%, Rehash=0, Collisions=5/101=5%
 
 # Pattern-specific Variable Values
 
@@ -174,7 +181,7 @@ VSCODE_PID = 22075
 
 # Directories
 
-# . (device 16777221, inode 44550071): 17 files, no impossibilities.
+# . (device 16777223, inode 44550071): 17 files, no impossibilities.
 
 # 17 files, no impossibilities in 1 directories.
 
@@ -248,7 +255,7 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Mon Sep 26 14:04:33 2022
+# Finished Make data base on Mon Feb 27 15:15:16 2023
 
  
 make: *** No rule to make target `all'.  Stop.

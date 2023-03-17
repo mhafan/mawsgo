@@ -2,13 +2,11 @@ package mawsgo
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"os/exec"
 	"strconv"
 	"strings"
-
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/lambda"
 )
 
 // ---------------------------------------------------------------------------
@@ -62,34 +60,36 @@ func (m *MAWSLambdaResponse) JSON() string {
 // Pozn.: V aplikaci by jedna Lambda funkce snad radeji nemela volat jinou ;)
 func (maws *MAWS) MAWSCallLambda(funName string, async bool, args interface{}) ([]byte, error) {
 	// Handle na volani AWS/Lambda
-	client := lambda.New(maws.AWS)
+	/*
+		client := lambda.New(maws.AWS)
 
-	// zakodovani vstupu
-	_enco, _encoError := json.Marshal(args)
+		// zakodovani vstupu
+		_enco, _encoError := json.Marshal(args)
 
-	// ...
-	if _encoError != nil {
+		// ...
+		if _encoError != nil {
+			//
+			return []byte{}, _encoError
+		}
+
 		//
-		return []byte{}, _encoError
-	}
+		_args := &lambda.InvokeInput{
+			FunctionName: aws.String(funName),
+			Payload:      _enco,
+		}
 
-	//
-	_args := &lambda.InvokeInput{
-		FunctionName: aws.String(funName),
-		Payload:      _enco,
-	}
-
-	//
-	if async {
 		//
-		_args.InvocationType = aws.String("Event")
-	}
+		if async {
+			//
+			_args.InvocationType = aws.String("Event")
+		}
 
-	// invokace: jmeno funkce + payload
-	_resp, _err := client.Invoke(_args)
+		// invokace: jmeno funkce + payload
+		_resp, _err := client.Invoke(_args)
 
-	//
-	return _resp.Payload, _err
+		//
+		return _resp.Payload, _err*/
+	return []byte{}, errors.New("not impl")
 }
 
 // ---------------------------------------------------------------------------
